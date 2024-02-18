@@ -1,5 +1,6 @@
 # TODO - import relevant sklearn score modules 
 from sklearn.metrics import accuracy_score, f1_score
+import json
 import argparse
 from src.utils.file_utils import load_jsonl
 
@@ -15,8 +16,9 @@ def evaluate_standard(gt_labels, pred_labels):
     # as label. Remeber to import the functions you use!
     print(set(gt_labels))
     print(len(pred_labels))
-    pred_label = [d[:-1] for d in pred_labels]
-    print(pred_label[-1])
+    pred_label = [json.loads(item)["label"] for item in pred_labels]
+    
+    print(set(pred_label))
     
     accuracy = accuracy_score(gt_labels, pred_labels["label"])
 
