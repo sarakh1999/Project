@@ -38,39 +38,17 @@ def model_and_tokenizer_setup(model_id_or_path):
 
     # Set configuration for loading the model with flash attention and float16 precision
     config = AutoConfig.from_pretrained(model_id_or_path, torch_dtype="auto", trust_remote_code=True)
-
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    torch_dtype = torch.float16 if device == "cuda" else torch.float16
-
-    
     model = AutoModelForCausalLM.from_pretrained(model_id_or_path, 
-                                               config=config,
-                                               torch_dtype=torch.float16,
-                                               trust_remote_code=True).to(device)
-
-
-    model = AutoModelForCausalLM.from_pretrained(model_id_or_path,
-                                                 config=config,
-                                                 torch_dtype=torch.float16,
-                                                 attn_implementation="flash_attention_2",
-                                                 trust_remote_code=True)
-
-    # Ensure the model is on a CUDA device if available for best performance with float16
-    if torch.cuda.is_available():
-        model = model.cuda()
-
+                                                               config=config,
+                                                               torch_dtype=torch.float16,
+                                                            
+                                                               trust_remote_code=True)
 
     # Load the tokenizer with left padding
     tokenizer = AutoTokenizer.from_pretrained(model_id_or_path, 
                                                use_fast=True, 
                                                padding_side="left",
                                                trust_remote_code=True)
-
-    tokenizer = AutoTokenizer.from_pretrained(model_id_or_path,
-                                              pad_token='<eos>',
-                                              padding_side='left',
-                                              trust_remote_code=True)
-
     
     # Set pad_token to eos_token if not already set
     if tokenizer.pad_token is None:
@@ -79,6 +57,5 @@ def model_and_tokenizer_setup(model_id_or_path):
     ##################################################
 
     # get_model_info(model)
-
 
     return model, tokenizer
