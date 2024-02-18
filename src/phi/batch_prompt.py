@@ -38,7 +38,14 @@ def batch_prompt(model, tokenizer, annotations_filepath, output_filepath, prompt
         # variable used in the for loop following this TODO
         # is what should be the output of the program snippet 
         # within TODO
+        inputs = tokenizer(batch['text'], return_tensors="pt", padding=True, truncation=True, max_length=512)
+        inputs = inputs.to("cuda")
 
+        # Generate outputs
+        output_sequences = model.generate(input_ids=inputs['input_ids'], attention_mask=inputs['attention_mask'], max_length=100)
+
+        # Decode the outputs
+        output_texts = [tokenizer.decode(output_sequence, skip_special_tokens=True) for output_sequence in output_sequences]
         # End of TODO.
         ##################################################
 
