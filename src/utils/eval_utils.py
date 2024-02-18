@@ -14,7 +14,8 @@ def evaluate_standard(gt_labels, pred_labels):
     # scikit-learn APIs in way they can deal with strings 
     # as label. Remeber to import the functions you use!
     print(set(gt_labels))
-    print(pred_label[-1] for pred_label in pred_labels)
+    pred_labels = [d["label"] for d in pred_labels if "label" in d]
+    print(pred_label[-1])
     
     accuracy = accuracy_score(gt_labels, pred_labels["label"])
 
