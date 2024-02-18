@@ -3,9 +3,9 @@ import argparse
 from tqdm import tqdm
 from torch.utils.data import DataLoader
 
-from utils.file_utils import load_jsonl, dump_jsonl
-from phi.phi_utils.dataset import PhiPromptDataset
-from phi.phi_utils.model_setup import model_and_tokenizer_setup
+from src.utils.file_utils import load_jsonl, dump_jsonl
+from src.phi.phi_utils.dataset import PhiPromptDataset
+from src.phi.phi_utils.model_setup import model_and_tokenizer_setup
 
 torch.set_default_device("cuda")
 
