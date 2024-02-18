@@ -47,7 +47,7 @@ def model_and_tokenizer_setup(model_id_or_path):
     model = AutoModelForCausalLM.from_pretrained(model_id_or_path,
                                                  config=config,
                                                  torch_dtype=torch.float16,
-                                                 use_flash_attention=True,
+                                                 attn_implementation="flash_attention_2",
                                                  trust_remote_code=True)
 
     # Ensure the model is on a CUDA device if available for best performance with float16
