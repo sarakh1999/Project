@@ -16,13 +16,13 @@ def evaluate_standard(gt_labels, pred_labels):
     # as label. Remeber to import the functions you use!
     print(set(gt_labels))
     print(len(pred_labels))
-    pred_label = [json.loads(item)["label"] for item in pred_labels]
+    #pred_label = [json.loads(item)["label"] for item in pred_labels]
     
-    print(set(pred_label))
+    print(set(pred_labels))
     
-    accuracy = accuracy_score(gt_labels,pred_label)
+    accuracy = accuracy_score(gt_labels,pred_labels)
 
-    f1score = f1_score(gt_labels, pred_label, pos_label="SUPPORTS")
+    f1score = f1_score(gt_labels, pred_labels, pos_label="SUPPORTS")
 
     # End of TODO.
     ##################################################
@@ -35,8 +35,7 @@ def model_eval_report(gt_filepath, pred_filepath):
     gt_labels = [d["label"] for d in gt_data]
     with open(pred_filepath, "r") as f:
         pred_labels = [d.strip() for d in f.readlines()]
-    accuracy, f1score = evaluate_standard(gt_labels, 
-                                          pred_labels)
+    accuracy, f1score = evaluate_standard(gt_labels, pred_labels)
 
     print(f"Overall Accuracy : {accuracy}")
     print(f"Overall F1 score : {f1score}")
