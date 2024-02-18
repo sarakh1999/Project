@@ -20,9 +20,9 @@ def evaluate_standard(gt_labels, pred_labels):
     
     print(set(pred_label))
     
-    accuracy = accuracy_score(gt_labels, pred_labels["label"])
+    accuracy = accuracy_score(gt_labels,pred_label)
 
-    f1score = f1_score(gt_labels, pred_labels["label"], pos_label="SUPPORTS")
+    f1score = f1_score(gt_labels, pred_label, pos_label="SUPPORTS")
 
     # End of TODO.
     ##################################################
