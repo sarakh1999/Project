@@ -57,10 +57,7 @@ def batch_prompt(model, tokenizer, annotations_filepath, output_filepath, prompt
             else:
                 predicted_label = "SUPPORTS"
 
-            output_data.append({
-                "final_response":final_response,
-                "label":predicted_label
-                })
+            output_data.append(predicted_label)
 
     dump_jsonl(output_data, output_filepath)
 
