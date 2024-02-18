@@ -38,10 +38,15 @@ def model_and_tokenizer_setup(model_id_or_path):
 
     # Set configuration for loading the model with flash attention and float16 precision
     config = AutoConfig.from_pretrained(model_id_or_path, torch_dtype="auto", trust_remote_code=True)
+
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    torch_dtype = torch.float16 if device == "cuda" else torch.float16
+
+    
     model = AutoModelForCausalLM.from_pretrained(model_id_or_path, 
                                                config=config,
                                                torch_dtype=torch.float16,
-                                               trust_remote_code=True)
+                                               trust_remote_code=True).to(device)
 
 
     model = AutoModelForCausalLM.from_pretrained(model_id_or_path,
