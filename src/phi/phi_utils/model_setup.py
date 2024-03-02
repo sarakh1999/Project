@@ -3,8 +3,8 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from transformers import AutoConfig
 import icetk
-# from flash_attn import flash_attn_qkvpacked_func, flash_attn_func
-# import flash_attn
+from flash_attn import flash_attn_qkvpacked_func, flash_attn_func
+import flash_attn
 
 # helper function provided to get model info
 def get_model_info(model):
