@@ -42,7 +42,7 @@ def model_and_tokenizer_setup(model_id_or_path):
     model = AutoModelForCausalLM.from_pretrained(model_id_or_path, 
                                                                config=config,
                                                                torch_dtype=torch.float16,
-                                                               # use_flash_attention=True,
+                                                               use_flash_attention=True,
                                                                trust_remote_code=True)
 
     # Load the tokenizer with left padding
