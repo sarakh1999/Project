@@ -18,7 +18,8 @@ class PhiPromptDataset(Dataset):
 
     def __getitem__(self, idx):
         sample = self.data[idx]
-        evidence =  self.evidence_data[idx]
+        if self.evidence_data is not None:
+            evidence =  self.evidence_data[idx]
         prompt = ""
 
         if self.prompt_type == "zero_eval":
