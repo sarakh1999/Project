@@ -18,6 +18,7 @@ class PhiPromptDataset(Dataset):
 
     def __getitem__(self, idx):
         sample = self.data[idx]
+        evidence =  self.evidence_data[idx]
         prompt = ""
 
         if self.prompt_type == "zero_eval":
@@ -48,13 +49,32 @@ class PhiPromptDataset(Dataset):
             
         elif self.prompt_type == "zero_shot_evidence":
             claim = sample["claim"]
-            information = sample.get("information", "")  # Assuming 'information' key exists
-            prompt = PHI_ZERO_SHOT_EVIDENCE_PROMPT.format(claim=claim, information=information).strip()
+            #information = sample.get("information", "")  # Assuming 'information' key exists
+            domain = sample.get("domain", "") 
+            prompt = PHI_ZERO_SHOT_EVIDENCE_PROMPT.format(claim=claim, domain=domain).strip()
 
         elif self.prompt_type == "zero_shot_evidence_eval":
             claim = sample["claim"]
-            evidence = sample.get("evidence", "")  # Assuming 'evidence' key exists
+            evidence = evidence  # Assuming 'evidence' key exists
             task_type = sample.get("task_type", "true/false")
+            # EVIDENCE_GENERATION_PROMPT = '''
+            #     Instruct:
+            #     You will be given a claim about the {task_type} and you should generate an evidence about the claim or {task_type} which may support or refutes the factuality of the claim or just have relation to it. 
+            #     You have to generate a detailed evidence for the claim given information about it.
+                
+            #     Claim: {claim}
+            #     Information: {information}
+            #     Evidence Output:
+            #     '''
+            # inputs = tokenizer(prompt2, return_tensors="pt", padding=True, truncation=True, max_length=512)
+            # inputs = inputs.to("cuda")
+            # # Generate outputs
+            # output_sequences = model.generate(input_ids=inputs['input_ids'], attention_mask=inputs['attention_mask'], max_length=100)
+
+            # # Decode the outputs
+            # output_texts = [tokenizer.decode(output_sequence, skip_special_tokens=True) for output_sequence in output_sequences]
+
+            
             prompt = PHI_ZERO_SHOT_EVIDENCE_EVAL_PROMPT.format(claim=claim, evidence=evidence, task_type=task_type).strip()
 
         else:
