@@ -46,7 +46,7 @@ def batch_prompt(model, tokenizer, annotations_filepath, output_filepath, prompt
 
         # Decode the outputs
         output_texts = [tokenizer.decode(output_sequence, skip_special_tokens=True) for output_sequence in output_sequences]
-        print(output_texts)
+        #print(output_texts)
         # End of TODO.
         ##################################################
         if evidence_filepath == None:
