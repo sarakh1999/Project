@@ -28,6 +28,7 @@ class PhiPromptDataset(Dataset):
         elif self.prompt_type == "few_shot":
             # Format examples for few-shot
             examples = sample.get("examples", [])
+            print(examples[0])
             formatted_examples = "\n".join([
                 f"- Claim: {ex['claim']}\n  Veracity: {ex['veracity']}" for ex in examples
             ])
