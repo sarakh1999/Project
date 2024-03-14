@@ -23,11 +23,10 @@ Output:
 
 PHI_ZERO_SHOT_EVIDENCE_PROMPT = '''
 Instruct:
-You will be given a claim and information about the fairness or factuality of the claim. 
-You have to generate a detailed evidence for the claim given information about it.
+You will be given a claim about the domain and You have to generate a detailed facutal evidence about the claim in that domain which should be related to the cliam and may support or refute the claim.
 
 Claim: {claim}
-Information: {information}
+Domian: {domain}
 Evidence Output:
 '''
 
