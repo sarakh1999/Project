@@ -25,19 +25,27 @@ class PhiPromptDataset(Dataset):
             task_type = sample.get("task_type", "true/false")  # Assuming 'task_type' key exists
             prompt = PHI_ZERO_SHOT_EVAL_PROMPT.format(claim=claim, task_type=task_type).strip()
 
-        elif self.prompt_type == "few_shot":
-            # Format examples for few-shot
-            examples = sample.get("examples", [])
-            print(sample)
-            print()
-            print(examples)
-            formatted_examples = "\n".join([
-                f"- Claim: {ex['claim']}\n  Veracity: {ex['veracity']}" for ex in examples
-            ])
-            claim = sample["claim"]
-            task_type = sample.get("task_type", "true/false")
-            prompt = PHI_FEW_SHOT_EVAL_PROMPT.format(examples=formatted_examples, claim=claim, task_type=task_type).strip()
+        # elif self.prompt_type == "few_shot":
+        #     # Format examples for few-shot
+        #     examples = sample.get("examples", [])
+        #     print(sample)
+        #     print()
+        #     print(examples)
+        #     formatted_examples = "\n".join([
+        #         f"- Claim: {ex['claim']}\n  Veracity: {ex['veracity']}" for ex in examples
+        #     ])
+        #     claim = sample["claim"]
+        #     task_type = sample.get("task_type", "true/false")
+        #     prompt = PHI_FEW_SHOT_EVAL_PROMPT.format(examples=formatted_examples, claim=claim, task_type=task_type).strip()
 
+
+        elif self.prompt_type == "few_shot":
+        examples = sample.get("examples", "")
+        claim = sample["claim"]
+        task_type = sample.get("task_type", "true/false")
+        # Since 'examples' is already a string in the expected format, no need for join or list comprehension
+        prompt = PHI_FEW_SHOT_EVAL_PROMPT.format(examples=examples, claim=claim, task_type=task_type).strip()
+        
         elif self.prompt_type == "zero_shot_evidence":
             claim = sample["claim"]
             information = sample.get("information", "")  # Assuming 'information' key exists
