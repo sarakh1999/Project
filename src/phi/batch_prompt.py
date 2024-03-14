@@ -70,7 +70,7 @@ def batch_prompt(model, tokenizer, annotations_filepath, output_filepath, prompt
         dump_jsonl(output_data, output_filepath)
 
     else:
-        print(len(output_data))
+        print("HIII")
         dump_jsonl(output_data, output_filepath)
         print(len(output_data))
     
