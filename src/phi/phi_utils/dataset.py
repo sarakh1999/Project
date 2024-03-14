@@ -17,7 +17,6 @@ class PhiPromptDataset(Dataset):
         return len(self.data)
 
     def __getitem__(self, idx):
-        idx = int(idx)
         sample = self.data[idx]
         prompt = ""
 
@@ -32,8 +31,6 @@ class PhiPromptDataset(Dataset):
             print(sample)
             print()
             print(examples)
-            print()
-            print(idx)
             formatted_examples = "\n".join([
                 f"- Claim: {ex['claim']}\n  Veracity: {ex['veracity']}" for ex in examples
             ])
