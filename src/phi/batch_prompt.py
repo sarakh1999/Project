@@ -56,15 +56,15 @@ def batch_prompt(model, tokenizer, annotations_filepath, output_filepath, prompt
                 output_data.append(tmp_response)
 
         else:
-        for output_text in output_texts:
-            final_response = output_text.split("Output:")[-1].split("<|endoftext|>")[0]
-            tmp_response = final_response.lower()
-            if "ref" in tmp_response or "false" in tmp_response:
-                predicted_label = "REFUTES"
-            else:
-                predicted_label = "SUPPORTS"
-
-            output_data.append(predicted_label)
+            for output_text in output_texts:
+                final_response = output_text.split("Output:")[-1].split("<|endoftext|>")[0]
+                tmp_response = final_response.lower()
+                if "ref" in tmp_response or "false" in tmp_response:
+                    predicted_label = "REFUTES"
+                else:
+                    predicted_label = "SUPPORTS"
+    
+                output_data.append(predicted_label)
     if evidence_filepath == None:
         dump_jsonl(output_data, output_filepath)
 
