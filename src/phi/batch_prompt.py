@@ -53,6 +53,7 @@ def batch_prompt(model, tokenizer, annotations_filepath, output_filepath, prompt
             for output_text in output_texts:
                 final_response = output_text.split("Evidence Output:")[-1].split("<|endoftext|>")[0]
                 tmp_response = final_response.lower()
+                print(tmp_response)
                 output_data.append(tmp_response)
 
         else:
