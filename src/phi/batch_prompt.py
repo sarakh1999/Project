@@ -42,14 +42,20 @@ def batch_prompt(model, tokenizer, annotations_filepath, output_filepath, prompt
         inputs = inputs.to("cuda")
 
         # Generate outputs
-        output_sequences = model.generate(input_ids=inputs['input_ids'], attention_mask=inputs['attention_mask'], max_length=100)
+        output_sequences = model.generate(input_ids=inputs['input_ids'], attention_mask=inputs['attention_mask'], max_length=300)
 
         # Decode the outputs
         output_texts = [tokenizer.decode(output_sequence, skip_special_tokens=True) for output_sequence in output_sequences]
         print(output_texts)
         # End of TODO.
         ##################################################
+        if evidence_filepath == None:
+            for output_text in output_texts:
+                final_response = output_text.split("Evidence Output:")[-1].split("<|endoftext|>")[0]
+                tmp_response = final_response.lower()
+                output_data.append(tmp_response)
 
+        else:
         for output_text in output_texts:
             final_response = output_text.split("Output:")[-1].split("<|endoftext|>")[0]
             tmp_response = final_response.lower()
@@ -59,15 +65,19 @@ def batch_prompt(model, tokenizer, annotations_filepath, output_filepath, prompt
                 predicted_label = "SUPPORTS"
 
             output_data.append(predicted_label)
+    if evidence_filepath == None:
+        dump_jsonl(output_data, output_filepath)
 
-    dump_jsonl(output_data, output_filepath)
-    print(len(output_data))
+    else:
 
-# Save the predictions to a text file
-    #output_filepath = "fof_predictions.txt"  # Set the output filepath to the required filename
-    with open(output_filepath, "w") as f:
-        for prediction in output_data:
-            f.write(f"{prediction}\n")
+        #dump_jsonl(output_data, output_filepath)
+        print(len(output_data))
+    
+        # Save the predictions to a text file
+        #output_filepath = "fof_predictions.txt"  # Set the output filepath to the required filename
+        with open(output_filepath, "w") as f:
+            for prediction in output_data:
+                f.write(f"{prediction}\n")
 
 def main(args):
     model, tokenizer = model_and_tokenizer_setup(args.model_id_or_path)
