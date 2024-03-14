@@ -71,7 +71,7 @@ def batch_prompt(model, tokenizer, annotations_filepath, output_filepath, prompt
 
     else:
 
-        #dump_jsonl(output_data, output_filepath)
+        dump_jsonl(output_data, output_filepath)
         print(len(output_data))
     
         # Save the predictions to a text file
