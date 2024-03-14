@@ -33,7 +33,6 @@ class PhiPromptDataset(Dataset):
             print()
             print(examples)
             print()
-            print(ex)
             print(idx)
             formatted_examples = "\n".join([
                 f"- Claim: {ex['claim']}\n  Veracity: {ex['veracity']}" for ex in examples
