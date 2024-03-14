@@ -40,12 +40,12 @@ class PhiPromptDataset(Dataset):
 
 
         elif self.prompt_type == "few_shot":
-        examples = sample.get("examples", "")
-        claim = sample["claim"]
-        task_type = sample.get("task_type", "true/false")
-        # Since 'examples' is already a string in the expected format, no need for join or list comprehension
-        prompt = PHI_FEW_SHOT_EVAL_PROMPT.format(examples=examples, claim=claim, task_type=task_type).strip()
-        
+            examples = sample.get("examples", "")
+            claim = sample["claim"]
+            task_type = sample.get("task_type", "true/false")
+            # Since 'examples' is already a string in the expected format, no need for join or list comprehension
+            prompt = PHI_FEW_SHOT_EVAL_PROMPT.format(examples=examples, claim=claim, task_type=task_type).strip()
+            
         elif self.prompt_type == "zero_shot_evidence":
             claim = sample["claim"]
             information = sample.get("information", "")  # Assuming 'information' key exists
