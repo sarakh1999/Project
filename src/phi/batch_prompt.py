@@ -77,9 +77,9 @@ def batch_prompt(model, tokenizer, annotations_filepath, output_filepath, prompt
     
         # Save the predictions to a text file
         #output_filepath = "fof_predictions.txt"  # Set the output filepath to the required filename
-        with open(output_filepath, "w") as f:
-            for prediction in output_data:
-                f.write(f"{prediction}\n")
+        #with open(output_filepath, "w") as f:
+           # for prediction in output_data:
+            #    f.write(f"{prediction}\n")
 
 def main(args):
     model, tokenizer = model_and_tokenizer_setup(args.model_id_or_path)
