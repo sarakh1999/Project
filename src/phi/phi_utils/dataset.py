@@ -56,7 +56,8 @@ class PhiPromptDataset(Dataset):
 
         elif self.prompt_type == "zero_shot_evidence_eval":
             claim = sample["claim"]
-            evidence = evidence  # Assuming 'evidence' key exists
+            evidence = evidence
+            print(evidence) # Assuming 'evidence' key exists
             task_type = sample.get("task_type", "true/false")
             # EVIDENCE_GENERATION_PROMPT = '''
             #     Instruct:
