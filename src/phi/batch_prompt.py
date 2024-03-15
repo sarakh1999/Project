@@ -60,6 +60,7 @@ def batch_prompt(model, tokenizer, annotations_filepath, output_filepath, prompt
             for output_text in output_texts:
                 final_response = output_text.split("Output:")[-1].split("<|endoftext|>")[0]
                 tmp_response = final_response.lower()
+                print(tmp_response)
                 if "ref" in tmp_response or "false" in tmp_response:
                     predicted_label = "REFUTES"
                 else:
