@@ -42,7 +42,7 @@ def batch_prompt(model, tokenizer, annotations_filepath, output_filepath, prompt
         inputs = inputs.to("cuda")
 
         # Generate outputs
-        output_sequences = model.generate(input_ids=inputs['input_ids'], attention_mask=inputs['attention_mask'], max_length=300)
+        output_sequences = model.generate(input_ids=inputs['input_ids'], attention_mask=inputs['attention_mask'], max_length=150)
 
         # Decode the outputs
         output_texts = [tokenizer.decode(output_sequence, skip_special_tokens=True) for output_sequence in output_sequences]
