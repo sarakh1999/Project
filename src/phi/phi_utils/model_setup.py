@@ -2,6 +2,7 @@
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from transformers import AutoConfig
+from transformers import LlamaForCausalLM, LlamaTokenizer
 import icetk
 # from flash_attn import flash_attn_qkvpacked_func, flash_attn_func
 # import flash_attn
@@ -39,7 +40,14 @@ def model_and_tokenizer_setup(model_id_or_path):
 
     # Set configuration for loading the model with flash attention and float16 precision
     config = AutoConfig.from_pretrained(model_id_or_path, torch_dtype="auto", trust_remote_code=True)
-    model = AutoModelForCausalLM.from_pretrained(model_id_or_path, 
+    # model = AutoModelForCausalLM.from_pretrained(model_id_or_path, 
+    #                                                            config=config,
+    #                                                            torch_dtype=torch.float16,
+    #                                                            # use_flash_attention=True,
+    #                                                            trust_remote_code=True)
+
+
+    model = LlamaForCausalLM.from_pretrained(model_id_or_path, 
                                                                config=config,
                                                                torch_dtype=torch.float16,
                                                                # use_flash_attention=True,
