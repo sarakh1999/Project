@@ -78,12 +78,13 @@ def model_and_tokenizer_setup(model_id_or_path):
     bnb_4bit_quant_type=bnb_4bit_quant_type,
     bnb_4bit_compute_dtype=compute_dtype,
     bnb_4bit_use_double_quant=use_nested_quant,)
-
+    use_flash_attention = False
+    
     model = AutoModelForCausalLM.from_pretrained(
-                                                use_flash_attention_2= False,
-                                                model_name,
+                                                model_id,
                                                 quantization_config=bnb_config,
-                                                #torch_dtype=torch.float16,
+                                                use_cache=False,
+                                                use_flash_attention_2=use_flash_attention,
                                                 device_map="auto",)
 
     # Load the tokenizer with left padding
