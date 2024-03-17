@@ -84,7 +84,7 @@ def model_and_tokenizer_setup(model_id_or_path):
                                                 model_name,
                                                 quantization_config=bnb_config,
                                                 #torch_dtype=torch.float16,
-                                                device_map="auto"و
+                                                device_map="auto",
                                             )
 
     # Load the tokenizer with left padding
