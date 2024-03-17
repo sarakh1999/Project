@@ -6,6 +6,11 @@ from transformers import LlamaForCausalLM, LlamaTokenizer
 import icetk
 # from flash_attn import flash_attn_qkvpacked_func, flash_attn_func
 # import flash_attn
+from transformers import AutoModelForCausalLM, BitsAndBytesConfig, HfArgumentParser, TrainingArguments, AutoTokenizer, pipeline
+from trl import SFTTrainer
+from transformers import AutoModelForCausalLM, BitsAndBytesConfig, HfArgumentParser, TrainingArguments, AutoTokenizer, pipeline
+from trl import SFTTrainer
+
 
 # helper function provided to get model info
 def get_model_info(model):
@@ -47,11 +52,39 @@ def model_and_tokenizer_setup(model_id_or_path):
     #                                                            trust_remote_code=True)
 
 
-    model = LlamaForCausalLM.from_pretrained(model_id_or_path, 
-                                                               config=config,
-                                                               torch_dtype=torch.float16,
-                                                               # use_flash_attention=True,
-                                                               trust_remote_code=True)
+    model_name = "NousResearch/llama-2-7b-hf" # use this if you have access to the official LLaMA 2 model "meta-llama/Llama-2-7b-chat-hf", though keep in mind you'll need to pass a Hugging Face key argument
+    new_model = "llama-2-7b-custom"
+    lora_r = 16
+    lora_alpha = 32
+    lora_dropout = 0.1
+    use_4bit = True
+    bnb_4bit_compute_dtype = "float16"
+    bnb_4bit_quant_type = "nf4"
+    use_nested_quant = True
+    output_dir = "results"
+    num_train_epochs = 5
+    fp16 = True
+    bf16 = False
+    max_steps = 100
+    warmup_ratio = 0.03
+    group_by_length = True
+    save_steps = 25
+    logging_steps = 1
+    packing = False
+    device_map={'':torch.cuda.current_device()}
+    
+    bnb_config = BitsAndBytesConfig(
+    load_in_4bit=use_4bit,
+    bnb_4bit_quant_type=bnb_4bit_quant_type,
+    bnb_4bit_compute_dtype=compute_dtype,
+    bnb_4bit_use_double_quant=use_nested_quant,)
+
+    model = AutoModelForCausalLM.from_pretrained(
+                                                model_name,
+                                                quantization_config=bnb_config,
+                                                #torch_dtype=torch.float16,
+                                                device_map="auto"
+                                            )
 
     # Load the tokenizer with left padding
     tokenizer = AutoTokenizer.from_pretrained(model_id_or_path, 
