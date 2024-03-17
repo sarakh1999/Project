@@ -3,7 +3,7 @@ from src.phi.phi_utils.model_setup import model_and_tokenizer_setup
 if __name__ == "__main__":
     
     # model, tokenizer = model_and_tokenizer_setup("microsoft/phi-2")
-    model, tokenizer = model_and_tokenizer_setup("meta-llama/Llama-2-13b-chat-hf")
+    model, tokenizer = model_and_tokenizer_setup("daryl149/llama-2-7b-chat-hf")
     
     if model is None or tokenizer is None:
         raise NotImplementedError(
