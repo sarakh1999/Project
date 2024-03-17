@@ -52,7 +52,7 @@ def model_and_tokenizer_setup(model_id_or_path):
     #                                                            trust_remote_code=True)
 
 
-    model_name = "NousResearch/llama-2-7b-hf" # use this if you have access to the official LLaMA 2 model "meta-llama/Llama-2-7b-chat-hf", though keep in mind you'll need to pass a Hugging Face key argument
+    model_name = "NousResearch/Llama-2-7b-hf"
     new_model = "llama-2-7b-custom"
     lora_r = 16
     lora_alpha = 32
@@ -80,6 +80,7 @@ def model_and_tokenizer_setup(model_id_or_path):
     bnb_4bit_use_double_quant=use_nested_quant,)
 
     model = AutoModelForCausalLM.from_pretrained(
+                                                use_flash_attention_2= False,
                                                 model_name,
                                                 quantization_config=bnb_config,
                                                 #torch_dtype=torch.float16,
